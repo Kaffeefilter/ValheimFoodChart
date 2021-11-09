@@ -1,0 +1,191 @@
+[
+    {
+        "name": "Black Soup",
+        "health": 50,
+        "stamina": 17,
+        "hp/tick": 3,
+        "time": 20
+    },
+    {
+        "name": "Boar Jerky",
+        "health": 23,
+        "stamina": 23,
+        "hp/tick": 2,
+        "time": 30
+    },
+    {
+        "name": "Carrot Soup",
+        "health": 15,
+        "stamina": 45,
+        "hp/tick": 2,
+        "time": 25
+    },
+    {
+        "name": "Deer Stew",
+        "health": 45,
+        "stamina": 15,
+        "hp/tick": 3,
+        "time": 25
+    },
+    {
+        "name": "Eyescream",
+        "health": 21,
+        "stamina": 65,
+        "hp/tick": 1,
+        "time": 25
+    },
+    {
+        "name": "Minced Meat Sauce",
+        "health": 40,
+        "stamina": 13,
+        "hp/tick": 3,
+        "time": 25
+    },
+    {
+        "name": "Onion Soup",
+        "health": 20,
+        "stamina": 60,
+        "hp/tick": 1,
+        "time": 20
+    },
+    {
+        "name": "Queens Jam",
+        "health": 14,
+        "stamina": 40,
+        "hp/tick": 2,
+        "time": 20
+    },
+    {
+        "name": "Sausages",
+        "health": 55,
+        "stamina": 18,
+        "hp/tick": 3,
+        "time": 25
+    },
+    {
+        "name": "Serpent Stew",
+        "health": 80,
+        "stamina": 26,
+        "hp/tick": 4,
+        "time": 30
+    },
+    {
+        "name": "Muckshake",
+        "health": 16,
+        "stamina": 50,
+        "hp/tick": 1,
+        "time": 20
+    },
+    {
+        "name": "Turnip Stew",
+        "health": 18,
+        "stamina": 55,
+        "hp/tick": 2,
+        "time": 25
+    },
+    {
+        "name": "Wolf Jerky",
+        "health": 33,
+        "stamina": 33,
+        "hp/tick": 3,
+        "time": 30
+    },
+    {
+        "name": "Wolf Skewer",
+        "health": 65,
+        "stamina": 21,
+        "hp/tick": 3,
+        "time": 25
+    },
+    {
+        "name": "Carrot",
+        "health": 10,
+        "stamina": 32,
+        "hp/tick": 1,
+        "time": 15
+    },
+    {
+        "name": "Onion",
+        "health": 13,
+        "stamina": 40,
+        "hp/tick": 1,
+        "time": 15
+    },
+    {
+        "name": "Raspberries",
+        "health": 7,
+        "stamina": 20,
+        "hp/tick": 1,
+        "time": 10
+    },
+    {
+        "name": "Blueberries",
+        "health": 8,
+        "stamina": 25,
+        "hp/tick": 1,
+        "time": 10
+    },
+    {
+        "name": "Cloudberries",
+        "health": 13,
+        "stamina": 40,
+        "hp/tick": 1,
+        "time": 15
+    },
+    {
+        "name": "Mushroom",
+        "health": 15,
+        "stamina": 15,
+        "hp/tick": 1,
+        "time": 15
+    },
+    {
+        "name": "Yellow Mushroom",
+        "health": 10,
+        "stamina": 30,
+        "hp/tick": 1,
+        "time": 10
+    },
+    {
+        "name": "Boar Meat",
+        "health": 30,
+        "stamina": 10,
+        "hp/tick": 2,
+        "time": 20
+    },
+    {
+        "name": "Neck Tail",
+        "health": 25,
+        "stamina": 8,
+        "hp/tick": 2,
+        "time": 20
+    },
+    {
+        "name": "Deer Meat",
+        "health": 35,
+        "stamina": 12,
+        "hp/tick": 2,
+        "time": 20
+    },
+    {
+        "name": "Fish",
+        "health": 45,
+        "stamina": 15,
+        "hp/tick": 2,
+        "time": 20
+    },
+    {
+        "name": "Wolf Meat",
+        "health": 45,
+        "stamina": 15,
+        "hp/tick": 3,
+        "time": 20
+    },
+    {
+        "name": "Honey",
+        "health": 8,
+        "stamina": 35,
+        "hp/tick": 1,
+        "time": 15
+    }
+]
