@@ -43,6 +43,10 @@ def main():
     tickBars2 = [combination[1]['hp/tick'] for combination in combinedFood][:5]
     tickBars3 = [combination[2]['hp/tick'] for combination in combinedFood][:5]
 
+    names = []
+    for combination in combinedFood[:5]:
+        names.append(f"{combination[0]['name']} + {combination[1]['name']} + {combination[2]['name']}")
+
     barWidth = 0.25
 
     r1 = np.arange(len(hpBars1))
@@ -50,6 +54,8 @@ def main():
     plt.bar(r1, hpBars1, color='#7f6d5f', edgecolor='white', width=barWidth)
     plt.bar(r1, hpBars2, bottom=hpBars1, color='#557f2d', edgecolor='white', width=barWidth)
     plt.bar(r1, hpBars3, bottom=hpBars, color='#2d7f5e', edgecolor='white', width=barWidth)
+
+    plt.xticks(r1, names, rotation='vertical')
 
     plt.show()
 
