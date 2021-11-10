@@ -67,14 +67,33 @@ def generateGraph(foods, n = 5, healthweight = 1, staminaweight = 1, tickweight 
 
     plt.xticks(r2, names, rotation='vertical')
 
-    plt.show()
+    return plt.gcf()
+
+
+def drawFigure(canvas, figure):
+    figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
+    figure_canvas_agg.draw()
+    figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
+    return figure_canvas_agg
 
 
 def main():
     with open("food.json") as f:
         foods = json.load(f)
     
-    generateGraph(foods)
+    graph = generateGraph(foods)
+
+    layout = [
+        [sg.Canvas(key='CANVAS')],
+        [sg.Button('Ok')]
+    ]
+
+    window = sg.Window("Vallheim Foods", layout, finalize=True)
+
+    drawFigure(window['CANVAS'].TKCanvas, graph)
+
+    event, values = window.read()
+    window.close()
     
 
 
