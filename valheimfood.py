@@ -3,7 +3,10 @@ from itertools import combinations
 from tabulate import tabulate
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import PySimpleGUI as sg
+import matplotlib
+matplotlib.use('TkAgg')
 
 
 def sortFoodKey(food, healthweight = 5, staminaweight = 5, tickweight = 1):
@@ -14,15 +17,10 @@ def sortFoodKey(food, healthweight = 5, staminaweight = 5, tickweight = 1):
     return health_weighted + stamina_weighted + hpptick_weighted
     
 
-def main():
-    with open("food.json") as f:
-        foods = json.load(f)
-    
+def generateGraph(foods, n = 5, healthweight = 1, staminaweight = 1, tickweight = 1):
+
     combinedFood = []
-    healthweight = 10
-    staminaweight = 10
-    tickweight = 1
-    
+
     for foodcomb in combinations(foods, 3):
         combinedFood.append([foodcomb[0], foodcomb[1], foodcomb[2]])
 
@@ -70,6 +68,14 @@ def main():
     plt.xticks(r2, names, rotation='vertical')
 
     plt.show()
+
+
+def main():
+    with open("food.json") as f:
+        foods = json.load(f)
+    
+    generateGraph(foods)
+    
 
 
 
