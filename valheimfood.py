@@ -83,16 +83,30 @@ def main():
     
     graph = generateGraph(foods)
 
+    table = [
+        [sg.Text(text="#"), sg.Text(text="Name"), sg.Text(text="HP"), sg.Text(text="Stamina"), sg.Text(text="Healing")],
+        [sg.Text(text="1"), sg.Text(text="keine ahnung"), sg.Text(text="180"), sg.Text(text="100"), sg.Text(text="4")],  #list comprehension
+        [sg.Text(text="2"), sg.Text(text="beere"), sg.Text(text="10"), sg.Text(text="15"), sg.Text(text="1")]
+    ]
+
     layout = [
-        [sg.Canvas(key='CANVAS')],
-        [sg.Button('Ok')]
+        [sg.Canvas(key='CANVAS', size=(640, 480)), sg.Frame('', table, size=(320, 480))],
+        [sg.Checkbox('Meadows', default=True), sg.Checkbox('Black Forest', default=True), sg.Checkbox('Swamp', default=True), sg.Checkbox('Mountain', default=True), sg.Checkbox('Plains', default=True), sg.Checkbox('Ocean', default=True)],
+        [sg.Text(text="Health"), sg.Text(text="1.00:1.00", key="SLIDERTEXT"), sg.Text(text="Stamina"), sg.Text("Anzahl")],
+        [sg.Slider(range=(0, 200), default_value=100, orientation='horizontal', disable_number_display=True, enable_events=True), sg.Checkbox(text="Healing"), sg.Slider(range=(1,20), default_value=5, orientation='horizontal')],
+        [sg.Button('Ok'), sg.Button('Reset')]
     ]
 
     window = sg.Window("Vallheim Foods", layout, finalize=True)
 
     drawFigure(window['CANVAS'].TKCanvas, graph)
 
-    event, values = window.read()
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            break
+        print(event, values)
+
     window.close()
     
 
