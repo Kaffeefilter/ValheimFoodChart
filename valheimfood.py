@@ -47,6 +47,8 @@ def generateGraph(foods, n = 5, healthweight = 1, staminaweight = 1, tickweight 
     for combination in combinedFood[:5]:
         names.append(f"{combination[0]['name']} + {combination[1]['name']} + {combination[2]['name']}")
 
+    numbers = list(range(1, n+1))
+
     barWidth = 0.25
 
     r1 = np.arange(len(hpBars1))
@@ -80,6 +82,9 @@ def createCell(key, i):
     #return sg.Text(text=f"{i if key == 'NUM' else ''}", key=f"_TABLE_{key}_{i}_")
     return sg.Text(text=f"{i if key == 'NUM' else f'_TABLE_{key}_{i}_'}", key=f"_TABLE_{key}_{i}_")
 
+def updateGraph(foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1):
+    pass
+
 
 def main():
     with open("food.json") as f:
@@ -106,7 +111,7 @@ def main():
     text_number = sg.Text(key='_TEXT_NUMBER_', text="Anzahl 5")
 
     slider_preference = sg.Slider(key="_SLIDER_PREFERENCE_", range=(0, 180), default_value=90, orientation='horizontal', disable_number_display=True, enable_events=True)
-    cb_healing = sg.Checkbox(key='_CBHEALING_', text="Healing")
+    cb_healing = sg.Checkbox(key='_CBHEALING_', text="Healing", enable_events=True)
     slider_elements = sg.Slider(key="_SLIDER_ELEMENTS_", range=(1,20), default_value=5, orientation='horizontal', disable_number_display=True, enable_events=True)
 
     layout_preference = [
@@ -132,6 +137,10 @@ def main():
 
     drawFigure(window['_CANVAS_'].TKCanvas, graph)
 
+    healthweight = 100
+    staminaweight = 100
+    healingweight = 1
+
     running = True
     while running:
         event, values = window.read()
@@ -155,14 +164,18 @@ def main():
                 window['_CBMOUNTAIN_'].update(True)
                 window['_CBPLAIN_'].update(True)
                 window['_CBOCEAN_'].update(True)
+                healthweight = 100
+                staminaweight = 100
+                healingweight = 1
             case "_SLIDER_PREFERENCE_":
                 slider_value = values['_SLIDER_PREFERENCE_'] + 10
                 healthweight = 1 if slider_value > 100 else slider_value / 100
                 staminaweight = 1 if slider_value < 100 else (100 - (slider_value - 100)) / 100
-                healingweight = 1
                 window['_TEXT_SLIDER_'].update(f"{healthweight:.2f}:{staminaweight:.2f}")
             case "_SLIDER_ELEMENTS_":
                 window['_TEXT_NUMBER_'].update(f"Anzahl {values['_SLIDER_ELEMENTS_']:n}")
+            case "_CBHEALING_":
+                healingweight = 50 if values['_CBHEALING_'] else 1
 
     window.close()
 
