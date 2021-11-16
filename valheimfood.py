@@ -76,6 +76,10 @@ def drawFigure(canvas, figure):
     figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
     return figure_canvas_agg
 
+def createCell(key, i):
+    #return sg.Text(text=f"{i if key == 'NUM' else ''}", key=f"_TABLE_{key}_{i}_")
+    return sg.Text(text=f"{i if key == 'NUM' else f'_TABLE_{key}_{i}_'}", key=f"_TABLE_{key}_{i}_")
+
 
 def main():
     with open("food.json") as f:
@@ -83,32 +87,84 @@ def main():
     
     graph = generateGraph(foods)
 
-    table = [
-        [sg.Text(text="#"), sg.Text(text="Name"), sg.Text(text="HP"), sg.Text(text="Stamina"), sg.Text(text="Healing")],
-        [sg.Text(text="1"), sg.Text(text="keine ahnung"), sg.Text(text="180"), sg.Text(text="100"), sg.Text(text="4")],  #list comprehension
-        [sg.Text(text="2"), sg.Text(text="beere"), sg.Text(text="10"), sg.Text(text="15"), sg.Text(text="1")]
+    table = [ [sg.Text(text="#"), sg.Text(text="Name"), sg.Text(text="HP"), sg.Text(text="Stamina"), sg.Text(text="Healing")] ]
+    #table += [ [sg.Text(text=f"{i}", key=f"_TABLE_NUM_{i}_"), sg.Text(key=f"_TABLE_NAME_{i}_"), sg.Text(key=f"_TABLE_HEALTH_{i}_"), sg.Text(key=f"_TABLE_STAMINA_{i}_"), sg.Text(key=f"_TABLE_HEALING_{i}_")] for i in range(1, 21)]
+    #table += [ [createCell(key, i) for i in range(1, 21) for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING')] ]
+    table += [ [createCell(key, i) for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING')] for i in range(1, 21) ]
+
+    canvas = sg.Canvas(key='_CANVAS_', size=(640, 480))
+    cb_meadows = sg.Checkbox(key='_CBMEADOWS_', text='Meadows', default=True)
+    cb_blackforest = sg.Checkbox(key='_CBBLACKFOREST_', text='Black Forest', default=True)
+    cb_swamp = sg.Checkbox(key='_CBSWAMP_', text='Swamp', default=True)
+    cb_mountain = sg.Checkbox(key='_CBMOUNTAIN_', text='Mountain', default=True)
+    cb_plains = sg.Checkbox(key='_CBPLAIN_', text='Plains', default=True)
+    cb_ocean = sg.Checkbox(key='_CBOCEAN_', text='Ocean', default=True)
+
+    text_slider_left = sg.Text(text="Health")
+    text_slider_middle = sg.Text(text="1.00:1.00", key="_TEXT_SLIDER_")
+    text_slider_right = sg.Text(text="Stamina")
+    text_number = sg.Text(key='_TEXT_NUMBER_', text="Anzahl 5")
+
+    slider_preference = sg.Slider(key="_SLIDER_PREFERENCE_", range=(0, 200), default_value=100, orientation='horizontal', disable_number_display=True, enable_events=True)
+    cb_healing = sg.Checkbox(key='_CBHEALING_', text="Healing")
+    slider_elements = sg.Slider(key="_SLIDER_ELEMENTS_", range=(1,20), default_value=5, orientation='horizontal', disable_number_display=True, enable_events=True)
+
+    layout_preference = [
+        [text_slider_left, text_slider_middle, text_slider_right],
+        [slider_preference, cb_healing]
+    ]
+
+    layout_element_numbers = [
+        [text_number],
+        [slider_elements]
     ]
 
     layout = [
-        [sg.Canvas(key='CANVAS', size=(640, 480)), sg.Frame('', table, size=(320, 480))],
-        [sg.Checkbox('Meadows', default=True), sg.Checkbox('Black Forest', default=True), sg.Checkbox('Swamp', default=True), sg.Checkbox('Mountain', default=True), sg.Checkbox('Plains', default=True), sg.Checkbox('Ocean', default=True)],
-        [sg.Text(text="Health"), sg.Text(text="1.00:1.00", key="SLIDERTEXT"), sg.Text(text="Stamina"), sg.Text("Anzahl")],
-        [sg.Slider(range=(0, 200), default_value=100, orientation='horizontal', disable_number_display=True, enable_events=True), sg.Checkbox(text="Healing"), sg.Slider(range=(1,20), default_value=5, orientation='horizontal')],
-        [sg.Button('Ok'), sg.Button('Reset')]
+        [sg.Column([
+            [canvas],
+            [cb_meadows, cb_blackforest, cb_swamp, cb_mountain, cb_plains, cb_ocean],
+            [sg.Column(layout_preference), sg.Column(layout_element_numbers)],
+            [sg.Button('Ok'), sg.Button('Reset')]
+        ]), sg.Column(table, vertical_alignment='top')]
     ]
 
     window = sg.Window("Vallheim Foods", layout, finalize=True)
 
-    drawFigure(window['CANVAS'].TKCanvas, graph)
+    drawFigure(window['_CANVAS_'].TKCanvas, graph)
 
-    while True:
+    running = True
+    while running:
         event, values = window.read()
-        if event == sg.WIN_CLOSED:
-            break
-        print(event, values)
+        #print(event)
+
+        match event:
+            case sg.WIN_CLOSED:
+                running = False
+                #break      #would work but coud be mistaken for switch case break
+            case "Ok":
+                print(values)
+            case "Reset":
+                window['_TEXT_SLIDER_'].update("1.00:1.00")
+                window['_SLIDER_PREFERENCE_'].update(100)
+                window['_SLIDER_ELEMENTS_'].update(5)
+                window['_TEXT_NUMBER_'].update("Anzahl 5")
+                window['_CBHEALING_'].update(False)
+                window['_CBMEADOWS_'].update(True)
+                window['_CBBLACKFOREST_'].update(True)
+                window['_CBSWAMP_'].update(True)
+                window['_CBMOUNTAIN_'].update(True)
+                window['_CBPLAIN_'].update(True)
+                window['_CBOCEAN_'].update(True)
+            case "_SLIDER_PREFERENCE_":
+                healthweight = 1 if values['_SLIDER_PREFERENCE_'] > 100 else values['_SLIDER_PREFERENCE_'] / 100
+                staminaweight = 1 if values['_SLIDER_PREFERENCE_'] < 100 else (100 - (values['_SLIDER_PREFERENCE_'] - 100)) / 100
+                healingweight = 1
+                window['_TEXT_SLIDER_'].update(f"{healthweight:.2f}:{staminaweight:.2f}")
+            case "_SLIDER_ELEMENTS_":
+                window['_TEXT_NUMBER_'].update(f"Anzahl {values['_SLIDER_ELEMENTS_']:n}")
 
     window.close()
-    
+
 
 
 
