@@ -176,8 +176,8 @@ def main():
                 running = False
                 #break      #would work but coud be mistaken for switch case break
             case "Update":
-                graph = updateGraph(window, foods, int(numbers), healthweight, staminaweight, healingweight)
                 delete_figure_agg(fig_canvas_agg)
+                graph = updateGraph(window, foods, int(numbers), healthweight, staminaweight, healingweight)
                 fig_canvas_agg = drawFigure(window['_CANVAS_'].TKCanvas, graph)
             case "Reset":
                 window['_TEXT_SLIDER_'].update("1.00:1.00")
