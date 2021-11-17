@@ -129,15 +129,17 @@ def main():
     text_slider_left = sg.Text(text="Stamina")
     text_slider_middle = sg.Text(text="1.00:1.00", key="_TEXT_SLIDER_")
     text_slider_right = sg.Text(text="Health")
+    text_slider_healing = sg.Text(text="Healing 0", key="_TEXT_HEALING_")
     text_number = sg.Text(key='_TEXT_NUMBER_', text="Anzahl 5")
 
     slider_preference = sg.Slider(key="_SLIDER_PREFERENCE_", range=(0, 180), default_value=90, orientation='horizontal', disable_number_display=True, enable_events=True)
-    cb_healing = sg.Checkbox(key='_CBHEALING_', text="Healing", enable_events=True)
+    #cb_healing = sg.Checkbox(key='_CBHEALING_', text="Healing", enable_events=True)
+    slider_healing = sg.Slider(key='_SLIDER_HEALING_', range=(0, 2), default_value=0, orientation='horizontal', size=(5, 20), disable_number_display=True, enable_events=True)
     slider_elements = sg.Slider(key="_SLIDER_ELEMENTS_", range=(1, 20), default_value=5, orientation='horizontal', disable_number_display=True, enable_events=True)
 
     layout_preference = [
-        [text_slider_left, text_slider_middle, text_slider_right],
-        [slider_preference, cb_healing]
+        [text_slider_left, text_slider_middle, text_slider_right, text_slider_healing],
+        [slider_preference, slider_healing]
     ]
 
     layout_element_numbers = [
@@ -182,7 +184,9 @@ def main():
                 window['_SLIDER_PREFERENCE_'].update(90)
                 window['_SLIDER_ELEMENTS_'].update(5)
                 window['_TEXT_NUMBER_'].update("Anzahl 5")
-                window['_CBHEALING_'].update(False)
+                #window['_CBHEALING_'].update(False)
+                window['_SLIDER_HEALING_'].update(0)
+                window['_TEXT_HEALING_'].update("Healing 0")
                 window['_CBMEADOWS_'].update(True)
                 window['_CBBLACKFOREST_'].update(True)
                 window['_CBSWAMP_'].update(True)
@@ -203,6 +207,14 @@ def main():
                 numbers = values['_SLIDER_ELEMENTS_']
             case "_CBHEALING_":
                 healingweight = 0.5 if values['_CBHEALING_'] else 0.1
+            case "_SLIDER_HEALING_":
+                window['_TEXT_HEALING_'].update(f"Healing {values['_SLIDER_HEALING_']:n}")
+                if values['_SLIDER_HEALING_'] == 0:
+                    healingweight = 0.1
+                elif values['_SLIDER_HEALING_'] == 1:
+                    healingweight = 0.5
+                else:
+                    healingweight = 1
 
     window.close()
 
