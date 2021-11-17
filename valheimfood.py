@@ -126,9 +126,9 @@ def main():
     cb_plains = sg.Checkbox(key='_CBPLAIN_', text='Plains', default=True)
     cb_ocean = sg.Checkbox(key='_CBOCEAN_', text='Ocean', default=True)
 
-    text_slider_left = sg.Text(text="Health")
+    text_slider_left = sg.Text(text="Stamina")
     text_slider_middle = sg.Text(text="1.00:1.00", key="_TEXT_SLIDER_")
-    text_slider_right = sg.Text(text="Stamina")
+    text_slider_right = sg.Text(text="Health")
     text_number = sg.Text(key='_TEXT_NUMBER_', text="Anzahl 5")
 
     slider_preference = sg.Slider(key="_SLIDER_PREFERENCE_", range=(0, 180), default_value=90, orientation='horizontal', disable_number_display=True, enable_events=True)
@@ -159,9 +159,9 @@ def main():
     graph = updateGraph(window, foods)
     fig_canvas_agg = drawFigure(window['_CANVAS_'].TKCanvas, graph)
 
-    healthweight = 100
-    staminaweight = 100
-    healingweight = 1
+    healthweight = 1
+    staminaweight = 1
+    healingweight = 0.1
     numbers = 5
 
     running = True
@@ -189,20 +189,20 @@ def main():
                 window['_CBMOUNTAIN_'].update(True)
                 window['_CBPLAIN_'].update(True)
                 window['_CBOCEAN_'].update(True)
-                healthweight = 100
-                staminaweight = 100
-                healingweight = 1
+                healthweight = 1
+                staminaweight = 1
+                healingweight = 0.1
                 numbers = 5
             case "_SLIDER_PREFERENCE_":
                 slider_value = values['_SLIDER_PREFERENCE_'] + 10
                 healthweight = 1 if slider_value > 100 else slider_value / 100
                 staminaweight = 1 if slider_value < 100 else (100 - (slider_value - 100)) / 100
-                window['_TEXT_SLIDER_'].update(f"{healthweight:.2f}:{staminaweight:.2f}")
+                window['_TEXT_SLIDER_'].update(f"{staminaweight:.2f}:{healthweight:.2f}")
             case "_SLIDER_ELEMENTS_":
                 window['_TEXT_NUMBER_'].update(f"Anzahl {values['_SLIDER_ELEMENTS_']:n}")
                 numbers = values['_SLIDER_ELEMENTS_']
             case "_CBHEALING_":
-                healingweight = 50 if values['_CBHEALING_'] else 1
+                healingweight = 0.5 if values['_CBHEALING_'] else 0.1
 
     window.close()
 
