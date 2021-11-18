@@ -13,7 +13,7 @@ def sortFoodKey(food, healthweight = 100, staminaweight = 100, tickweight = 1):
     #baseline wolf jerky: hp = 33, stamina = 33, hpptick = 3 => hp == stamina == hpptick * 11
     health_weighted = (food[0]['health'] + food[1]['health'] + food[2]['health']) * healthweight
     stamina_weighted = (food[0]['stamina'] + food[1]['stamina'] + food[2]['stamina']) * staminaweight 
-    hpptick_weighted = (food[0]['hp/tick'] + food[1]['hp/tick'] + food[2]['hp/tick']) * 11 * tickweight
+    hpptick_weighted = (food[0]['healing'] + food[1]['healing'] + food[2]['healing']) * 11 * tickweight
     return health_weighted + stamina_weighted + hpptick_weighted
     
 
@@ -37,9 +37,9 @@ def generateGraph(foods, n = 5, healthweight = 100, staminaweight = 100, tickwei
     staBars3 = [combination[2]['stamina'] for combination in combinedFood][:n]
     staBars = np.add(staBars1, staBars2).tolist()
 
-    tickBars1 = [combination[0]['hp/tick'] for combination in combinedFood][:n]
-    tickBars2 = [combination[1]['hp/tick'] for combination in combinedFood][:n]
-    tickBars3 = [combination[2]['hp/tick'] for combination in combinedFood][:n]
+    tickBars1 = [combination[0]['healing'] for combination in combinedFood][:n]
+    tickBars2 = [combination[1]['healing'] for combination in combinedFood][:n]
+    tickBars3 = [combination[2]['healing'] for combination in combinedFood][:n]
     tickBars = np.add(tickBars1, tickBars2).tolist()
 
     """ names = []
@@ -99,7 +99,7 @@ def updateGraph(window, foods, n = 5, healthweight = 100, staminaweight = 100, h
                     case 'STAMINA':
                         window[f'_TABLE_{key}_{i}_'].update(combinedFood[i-1][0]['stamina'] + combinedFood[i-1][1]['stamina'] + combinedFood[i-1][2]['stamina'])
                     case 'HEALING':
-                        window[f'_TABLE_{key}_{i}_'].update(combinedFood[i-1][0]['hp/tick'] + combinedFood[i-1][1]['hp/tick'] + combinedFood[i-1][2]['hp/tick'])
+                        window[f'_TABLE_{key}_{i}_'].update(combinedFood[i-1][0]['healing'] + combinedFood[i-1][1]['healing'] + combinedFood[i-1][2]['healing'])
     return graph
 
 def delete_figure_agg(figure_agg):

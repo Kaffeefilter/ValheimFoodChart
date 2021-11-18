@@ -1,191 +1,266 @@
 [
     {
-        "name": "Black Soup",
-        "health": 50,
-        "stamina": 17,
-        "hp/tick": 3,
-        "time": 20
+      "name": "Raspberries",
+      "health": 7,
+      "stamina": 20,
+      "healing": 1,
+      "duration": 600,
+      "biome": "Meadows"
     },
     {
-        "name": "Boar Jerky",
-        "health": 23,
-        "stamina": 23,
-        "hp/tick": 2,
-        "time": 30
+      "name": "Mushroom",
+      "health": 15,
+      "stamina": 15,
+      "healing": 1,
+      "duration": 900,
+      "biome": "Meadows"
     },
     {
-        "name": "Carrot Soup",
-        "health": 15,
-        "stamina": 45,
-        "hp/tick": 2,
-        "time": 25
+      "name": "Honey",
+      "health": 8,
+      "stamina": 35,
+      "healing": 1,
+      "duration": 900,
+      "biome": "Meadows"
     },
     {
-        "name": "Deer Stew",
-        "health": 45,
-        "stamina": 15,
-        "hp/tick": 3,
-        "time": 25
+      "name": "Grilled neck tail",
+      "health": 25,
+      "stamina": 8,
+      "healing": 2,
+      "duration": 1200,
+      "biome": "Meadows"
     },
     {
-        "name": "Eyescream",
-        "health": 21,
-        "stamina": 65,
-        "hp/tick": 1,
-        "time": 25
+      "name": "Cooked boar meat",
+      "health": 30,
+      "stamina": 10,
+      "healing": 2,
+      "duration": 1200,
+      "biome": "Meadows"
     },
     {
-        "name": "Minced Meat Sauce",
-        "health": 40,
-        "stamina": 13,
-        "hp/tick": 3,
-        "time": 25
+      "name": "Boar jerky",
+      "health": 23,
+      "stamina": 23,
+      "healing": 1,
+      "duration": 1800,
+      "biome": "Meadows"
     },
     {
-        "name": "Onion Soup",
-        "health": 20,
-        "stamina": 60,
-        "hp/tick": 1,
-        "time": 20
+      "name": "Cooked deer meat",
+      "health": 35,
+      "stamina": 12,
+      "healing": 2,
+      "duration": 1200,
+      "biome": "Meadows"
     },
     {
-        "name": "Queens Jam",
-        "health": 14,
-        "stamina": 40,
-        "hp/tick": 2,
-        "time": 20
+      "name": "Blueberries",
+      "health": 8,
+      "stamina": 25,
+      "healing": 1,
+      "duration": 600,
+      "biome": "Black Forest"
     },
     {
-        "name": "Sausages",
-        "health": 55,
-        "stamina": 18,
-        "hp/tick": 3,
-        "time": 25
+      "name": "Carrot",
+      "health": 10,
+      "stamina": 32,
+      "healing": 1,
+      "duration": 900,
+      "biome": "Black Forest"
     },
     {
-        "name": "Serpent Stew",
-        "health": 80,
-        "stamina": 26,
-        "hp/tick": 4,
-        "time": 30
+      "name": "Yellow mushroom",
+      "health": 10,
+      "stamina": 30,
+      "healing": 1,
+      "duration": 600,
+      "biome": "Black Forest"
     },
     {
-        "name": "Muckshake",
-        "health": 16,
-        "stamina": 50,
-        "hp/tick": 1,
-        "time": 20
+      "name": "Carrot soup",
+      "health": 15,
+      "stamina": 45,
+      "healing": 2,
+      "duration": 1500,
+      "biome": "Black Forest"
     },
     {
-        "name": "Turnip Stew",
-        "health": 18,
-        "stamina": 55,
-        "hp/tick": 2,
-        "time": 25
+      "name": "Queens jam",
+      "health": 14,
+      "stamina": 40,
+      "healing": 2,
+      "duration": 1200,
+      "biome": "Black Forest"
     },
     {
-        "name": "Wolf Jerky",
-        "health": 33,
-        "stamina": 33,
-        "hp/tick": 3,
-        "time": 30
+      "name": "Cooked fish",
+      "health": 45,
+      "stamina": 15,
+      "healing": 2,
+      "duration": 1200,
+      "biome": "Black Forest"
     },
     {
-        "name": "Wolf Skewer",
-        "health": 65,
-        "stamina": 21,
-        "hp/tick": 3,
-        "time": 25
+      "name": "Deer stew",
+      "health": 45,
+      "stamina": 15,
+      "healing": 2,
+      "duration": 1500,
+      "biome": "Black Forest"
     },
     {
-        "name": "Carrot",
-        "health": 10,
-        "stamina": 32,
-        "hp/tick": 1,
-        "time": 15
+      "name": "Minced Meat Sauce",
+      "health": 40,
+      "stamina": 13,
+      "healing": 3,
+      "duration": 1500,
+      "biome": "Black Forest"
     },
     {
-        "name": "Onion",
-        "health": 13,
-        "stamina": 40,
-        "hp/tick": 1,
-        "time": 15
+      "name": "Muckshake",
+      "health": 16,
+      "stamina": 50,
+      "healing": 1,
+      "duration": 1200,
+      "biome": "Swamp"
     },
     {
-        "name": "Raspberries",
-        "health": 7,
-        "stamina": 20,
-        "hp/tick": 1,
-        "time": 10
+      "name": "Turnip stew",
+      "health": 18,
+      "stamina": 55,
+      "healing": 2,
+      "duration": 1500,
+      "biome": "Swamp"
     },
     {
-        "name": "Blueberries",
-        "health": 8,
-        "stamina": 25,
-        "hp/tick": 1,
-        "time": 10
+      "name": "Sausages",
+      "health": 55,
+      "stamina": 18,
+      "healing": 3,
+      "duration": 1500,
+      "biome": "Swamp"
     },
     {
-        "name": "Cloudberries",
-        "health": 13,
-        "stamina": 40,
-        "hp/tick": 1,
-        "time": 15
+      "name": "Black soup",
+      "health": 50,
+      "stamina": 17,
+      "healing": 3,
+      "duration": 1200,
+      "biome": "Swamp"
     },
     {
-        "name": "Mushroom",
-        "health": 15,
-        "stamina": 15,
-        "hp/tick": 1,
-        "time": 15
+      "name": "Cooked serpent meat",
+      "health": 70,
+      "stamina": 23,
+      "healing": 3,
+      "duration": 1500,
+      "biome": "Ocean"
     },
     {
-        "name": "Yellow Mushroom",
-        "health": 10,
-        "stamina": 30,
-        "hp/tick": 1,
-        "time": 10
+      "name": "Serpent stew",
+      "health": 80,
+      "stamina": 26,
+      "healing": 4,
+      "duration": 1800,
+      "biome": "Ocean"
     },
     {
-        "name": "Boar Meat",
-        "health": 30,
-        "stamina": 10,
-        "hp/tick": 2,
-        "time": 20
+      "name": "Onion",
+      "health": 13,
+      "stamina": 40,
+      "healing": 1,
+      "duration": 900,
+      "biome": "Mountains"
     },
     {
-        "name": "Neck Tail",
-        "health": 25,
-        "stamina": 8,
-        "hp/tick": 2,
-        "time": 20
+      "name": "Onion soup",
+      "health": 20,
+      "stamina": 60,
+      "healing": 1,
+      "duration": 1200,
+      "biome": "Mountains"
     },
     {
-        "name": "Deer Meat",
-        "health": 35,
-        "stamina": 12,
-        "hp/tick": 2,
-        "time": 20
+      "name": "Cooked wolf meat",
+      "health": 45,
+      "stamina": 15,
+      "healing": 3,
+      "duration": 1200,
+      "biome": "Mountains"
     },
     {
-        "name": "Fish",
-        "health": 45,
-        "stamina": 15,
-        "hp/tick": 2,
-        "time": 20
+      "name": "Wolf jerky",
+      "health": 33,
+      "stamina": 33,
+      "healing": 1,
+      "duration": 1800,
+      "biome": "Mountains"
     },
     {
-        "name": "Wolf Meat",
-        "health": 45,
-        "stamina": 15,
-        "hp/tick": 3,
-        "time": 20
+      "name": "Wolf skewer",
+      "health": 65,
+      "stamina": 21,
+      "healing": 3,
+      "duration": 1500,
+      "biome": "Mountains"
     },
     {
-        "name": "Honey",
-        "health": 8,
-        "stamina": 35,
-        "hp/tick": 1,
-        "time": 15
+      "name": "Eyescream",
+      "health": 21,
+      "stamina": 65,
+      "healing": 1,
+      "duration": 1500,
+      "biome": "Mountains"
+    },
+    {
+      "name": "Cloudberries",
+      "health": 13,
+      "stamina": 40,
+      "healing": 1,
+      "duration": 900,
+      "biome": "Plains"
+    },
+    {
+      "name": "Cooked lox meat",
+      "health": 50,
+      "stamina": 16,
+      "healing": 4,
+      "duration": 1200,
+      "biome": "Plains"
+    },
+    {
+      "name": "Fish wraps",
+      "health": 70,
+      "stamina": 23,
+      "healing": 4,
+      "duration": 1500,
+      "biome": "Plains"
+    },
+    {
+      "name": "Lox meat pie",
+      "health": 75,
+      "stamina": 24,
+      "healing": 4,
+      "duration": 1800,
+      "biome": "Plains"
+    },
+    {
+      "name": "Blood pudding",
+      "health": 25,
+      "stamina": 75,
+      "healing": 1,
+      "duration": 1800,
+      "biome": "Plains"
+    },
+    {
+      "name": "Bread",
+      "health": 23,
+      "stamina": 70,
+      "healing": 1,
+      "duration": 1500,
+      "biome": "Plains"
     }
 ]
