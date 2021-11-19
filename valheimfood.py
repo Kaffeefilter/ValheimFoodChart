@@ -9,22 +9,51 @@ import matplotlib
 matplotlib.use('TkAgg')
 
 
-def sortFoodKey(food, healthweight = 100, staminaweight = 100, tickweight = 1):
+def sortFoodKey(food, healthweight = 100, staminaweight = 100, healingweight = 1):
     #baseline wolf jerky: hp = 33, stamina = 33, hpptick = 3 => hp == stamina == hpptick * 11
     health_weighted = (food[0]['health'] + food[1]['health'] + food[2]['health']) * healthweight
     stamina_weighted = (food[0]['stamina'] + food[1]['stamina'] + food[2]['stamina']) * staminaweight 
-    hpptick_weighted = (food[0]['healing'] + food[1]['healing'] + food[2]['healing']) * 11 * tickweight
+    hpptick_weighted = (food[0]['healing'] + food[1]['healing'] + food[2]['healing']) * 11 * healingweight
     return health_weighted + stamina_weighted + hpptick_weighted
+
+def biomeKeyToName(key):
+    match key:
+        case '_CBMEADOWS_':
+            return 'Meadows'
+        case '_CBBLACKFOREST_':
+            return 'Black Forest'
+        case '_CBSWAMP_':
+            return 'Swamp'
+        case '_CBMOUNTAIN_':
+            return 'Mountains'
+        case '_CBPLAIN_':
+            return 'Plains'
+        case '_CBOCEAN_':
+            return 'Ocean'
+
     
 
-def generateGraph(foods, n = 5, healthweight = 100, staminaweight = 100, tickweight = 1):
+def generateGraph(foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1, biomes = None):
+    if biomes is None or not biomes:
+        biomes = ['Meadows', 'Black Forest', 'Swamp', 'Mountains', 'Plains', 'Ocean']
+    else:
+        biomes = [biomeKeyToName(key) for key in biomes]
 
-    combinedFood = []
-    for foodcomb in combinations(foods, 3):
-        combinedFood.append([foodcomb[0], foodcomb[1], foodcomb[2]])
+    filteredFoods = [food for food in foods if food['biome'] in biomes]
 
-    combinedFood.sort(key=lambda x: sortFoodKey(x, healthweight, staminaweight, tickweight), reverse=True)
+    #combinedFood = []
+    #for foodcomb in combinations(filteredFoods, 3):
+    #    combinedFood.append([foodcomb[0], foodcomb[1], foodcomb[2]])
+    combinedFood = [[foodcomb[0], foodcomb[1], foodcomb[2]] for foodcomb in combinations(filteredFoods, 3)]
+
+    combinedFood.sort(key=lambda x: sortFoodKey(x, healthweight, staminaweight, healingweight), reverse=True)
     #print(tabulate(combinedFood[:10]))
+
+    if(0 < len(combinedFood) < n):
+        n = len(combinedFood)
+    elif(not combinedFood):
+        combinedFood = [[{key: 0 for key in ('name', 'health', 'stamina', 'healing')} for j in range(0, 3)] for i in range(0, n)]
+        n = 0
 
     hpBars1 = [combination[0]['health'] for combination in combinedFood][:n]
     hpBars2 = [combination[1]['health'] for combination in combinedFood][:n]
@@ -67,7 +96,7 @@ def generateGraph(foods, n = 5, healthweight = 100, staminaweight = 100, tickwei
 
     plt.xticks(r2, numbers)
 
-    return (plt.gcf(), combinedFood[:n])
+    return (plt.gcf(), combinedFood[:n], n)
 
 
 def drawFigure(canvas, figure):
@@ -82,8 +111,14 @@ def createCell(key, i):
     #return sg.Text(text=f"{i if key == 'NUM' else f'_TABLE_{key}_{i}_'}", key=f"_TABLE_{key}_{i}_")
 
 
-def updateGraph(window, foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1):
-    graph, combinedFood = generateGraph(foods, n, healthweight, staminaweight, healingweight)
+def updateGraph(window, foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1, biomes = None):
+    graph, combinedFood, n = generateGraph(foods, n, healthweight, staminaweight, healingweight, biomes)
+    if n == 0:
+        for i in range(1, 21):
+            for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING'):
+                window[f'_TABLE_{key}_{i}_'].update("")
+        window[f'_TABLE_NAME_1_'].update("No Matches found")
+        return graph
 
     for i in range(1, 21):
         for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING'):
@@ -176,10 +211,17 @@ def main():
                 running = False
                 #break      #would work but coud be mistaken for switch case break
             case "Update":
+                biomes = [key for key, value in values.items() if key in ('_CBMEADOWS_', '_CBBLACKFOREST_', '_CBSWAMP_', '_CBMOUNTAIN_', '_CBPLAIN_', '_CBOCEAN_') if value]
                 delete_figure_agg(fig_canvas_agg)
-                graph = updateGraph(window, foods, int(numbers), healthweight, staminaweight, healingweight)
+                graph = updateGraph(window, foods, int(numbers), healthweight, staminaweight, healingweight, biomes)
                 fig_canvas_agg = drawFigure(window['_CANVAS_'].TKCanvas, graph)
             case "Reset":
+                window['_CBMEADOWS_'].update(True)
+                window['_CBBLACKFOREST_'].update(True)
+                window['_CBSWAMP_'].update(True)
+                window['_CBMOUNTAIN_'].update(True)
+                window['_CBPLAIN_'].update(True)
+                window['_CBOCEAN_'].update(True)
                 window['_TEXT_SLIDER_'].update("1.00:1.00")
                 window['_SLIDER_PREFERENCE_'].update(90)
                 window['_SLIDER_ELEMENTS_'].update(5)
