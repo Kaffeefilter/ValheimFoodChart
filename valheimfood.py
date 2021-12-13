@@ -111,8 +111,8 @@ def drawFigure(canvas, figure):
     return figure_canvas_agg
 
 
-def createCell(key, i):
-    return sg.Text(text=f"{i if key == 'NUM' else ''}", key=f"_TABLE_{key}_{i}_")
+def createCell(key, i, size):
+    return sg.Text(text=f"{i if key == 'NUM' else ''}", key=f"_TABLE_{key}_{i}_", size=size, justification='left')
     #return sg.Text(text=f"{i if key == 'NUM' else f'_TABLE_{key}_{i}_'}", key=f"_TABLE_{key}_{i}_")
 
 
@@ -122,7 +122,7 @@ def updateGraph(window, foods, n = 5, healthweight = 100, staminaweight = 100, h
         for i in range(1, 21):
             for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING'):
                 window[f'_TABLE_{key}_{i}_'].update("")
-        window[f'_TABLE_NAME_1_'].update("No Matches found")
+        window['_TABLE_NAME_1_'].update("No Matches found")
         return graph
 
     for i in range(1, 21):
@@ -153,10 +153,22 @@ def main():
     
     #graph = generateGraph(foods)
 
-    table = [ [sg.Text(text="#"), sg.Text(text="Name"), sg.Text(text="HP"), sg.Text(text="Stamina"), sg.Text(text="Healing")] ]
+    sizes = {
+        'NUM': 2,
+        'NAME': 41,
+        'HEALTH': 3,
+        'STAMINA': 6,
+        'HEALING': 5
+    }
+
+    table = [ [ sg.Text(text="#", size=sizes['NUM'], justification='left'), 
+                sg.Text(text="Name", size=sizes['NAME'], justification='left'), 
+                sg.Text(text="HP", size=sizes['HEALTH'], justification='left'), 
+                sg.Text(text="Stamina", size=sizes['STAMINA'], justification='left'), 
+                sg.Text(text="Healing", size=sizes['HEALING'], justification='left')] ]
     #table += [ [sg.Text(text=f"{i}", key=f"_TABLE_NUM_{i}_"), sg.Text(key=f"_TABLE_NAME_{i}_"), sg.Text(key=f"_TABLE_HEALTH_{i}_"), sg.Text(key=f"_TABLE_STAMINA_{i}_"), sg.Text(key=f"_TABLE_HEALING_{i}_")] for i in range(1, 21)]
     #table += [ [createCell(key, i) for i in range(1, 21) for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING')] ]
-    table += [ [createCell(key, i) for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING')] for i in range(1, 21) ]
+    table += [ [createCell(key, i, sizes[key]) for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING')] for i in range(1, 21) ]
 
     canvas = sg.Canvas(key='_CANVAS_', size=(640, 480))
     cb_meadows = sg.Checkbox(key='_CBMEADOWS_', text='Meadows', default=True)
@@ -198,7 +210,7 @@ def main():
             [cb_meadows, cb_blackforest, cb_swamp, cb_mountain, cb_plains, cb_ocean],
             [sg.Column(layout_preference), sg.Column(layout_element_numbers)],
             [text_min_stamina, spin_min_stamina, text_min_health, spin_min_health],
-            [sg.Button('Update'), sg.Button('Reset')]
+            [sg.Button('Update'), sg.Button('Reset'), sg.Button('Size')]
         ]), sg.Column(table, vertical_alignment='top')]
     ]
 
@@ -272,6 +284,8 @@ def main():
                     healingweight = 0.5
                 else:
                     healingweight = 1
+            case 'Size':
+                print(window['_TABLE_NAME_14_'].get_size())
 
 
     window.close()
