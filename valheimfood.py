@@ -31,9 +31,14 @@ def biomeKeyToName(key):
         case '_CBOCEAN_':
             return 'Ocean'
 
-    
+def checkHealth(foodcomb, minhealth):
+    return (foodcomb[0]['health'] + foodcomb[1]['health'] + foodcomb[2]['health']) >= minhealth
 
-def generateGraph(foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1, biomes = None):
+def checkStamina(foodcomb, minstamina):
+    return (foodcomb[0]['stamina'] + foodcomb[1]['stamina'] + foodcomb[2]['stamina']) >= minstamina
+
+
+def generateGraph(foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1, biomes = None, minstamina = 0, minhealth = 0):
     if biomes is None or not biomes:
         biomes = ['Meadows', 'Black Forest', 'Swamp', 'Mountains', 'Plains', 'Ocean']
     else:
@@ -44,7 +49,7 @@ def generateGraph(foods, n = 5, healthweight = 100, staminaweight = 100, healing
     #combinedFood = []
     #for foodcomb in combinations(filteredFoods, 3):
     #    combinedFood.append([foodcomb[0], foodcomb[1], foodcomb[2]])
-    combinedFood = [[foodcomb[0], foodcomb[1], foodcomb[2]] for foodcomb in combinations(filteredFoods, 3)]
+    combinedFood = [[foodcomb[0], foodcomb[1], foodcomb[2]] for foodcomb in combinations(filteredFoods, 3) if checkHealth(foodcomb, minhealth) if checkStamina(foodcomb, minstamina)]
 
     combinedFood.sort(key=lambda x: sortFoodKey(x, healthweight, staminaweight, healingweight), reverse=True)
     #print(tabulate(combinedFood[:10]))
@@ -111,8 +116,8 @@ def createCell(key, i):
     #return sg.Text(text=f"{i if key == 'NUM' else f'_TABLE_{key}_{i}_'}", key=f"_TABLE_{key}_{i}_")
 
 
-def updateGraph(window, foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1, biomes = None):
-    graph, combinedFood, n = generateGraph(foods, n, healthweight, staminaweight, healingweight, biomes)
+def updateGraph(window, foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1, biomes = None, minstamina = 0, minhealth = 0):
+    graph, combinedFood, n = generateGraph(foods, n, healthweight, staminaweight, healingweight, biomes, minstamina, minhealth)
     if n == 0:
         for i in range(1, 21):
             for key in ('NUM', 'NAME', 'HEALTH', 'STAMINA', 'HEALING'):
@@ -172,6 +177,11 @@ def main():
     slider_healing = sg.Slider(key='_SLIDER_HEALING_', range=(0, 2), default_value=0, orientation='horizontal', size=(5, 20), disable_number_display=True, enable_events=True)
     slider_elements = sg.Slider(key="_SLIDER_ELEMENTS_", range=(1, 20), default_value=5, orientation='horizontal', disable_number_display=True, enable_events=True)
 
+    text_min_stamina = sg.Text(text="min Stamina")
+    spin_min_stamina = sg.Spin(values=[i for i in range(1,200)], initial_value=0, size=4, key='_MIN_STAMINA_')
+    text_min_health = sg.Text(text="min Health")
+    spin_min_health = sg.Spin(values=[i for i in range(1,200)], initial_value=0, size=4, key='_MIN_HEALTH_')
+
     layout_preference = [
         [text_slider_left, text_slider_middle, text_slider_right, text_slider_healing],
         [slider_preference, slider_healing]
@@ -187,6 +197,7 @@ def main():
             [canvas],
             [cb_meadows, cb_blackforest, cb_swamp, cb_mountain, cb_plains, cb_ocean],
             [sg.Column(layout_preference), sg.Column(layout_element_numbers)],
+            [text_min_stamina, spin_min_stamina, text_min_health, spin_min_health],
             [sg.Button('Update'), sg.Button('Reset')]
         ]), sg.Column(table, vertical_alignment='top')]
     ]
@@ -212,8 +223,10 @@ def main():
                 #break      #would work but coud be mistaken for switch case break
             case "Update":
                 biomes = [key for key, value in values.items() if key in ('_CBMEADOWS_', '_CBBLACKFOREST_', '_CBSWAMP_', '_CBMOUNTAIN_', '_CBPLAIN_', '_CBOCEAN_') if value]
+                minstamina = int(values['_MIN_STAMINA_'])
+                minhealth = int(values['_MIN_HEALTH_'])
                 delete_figure_agg(fig_canvas_agg)
-                graph = updateGraph(window, foods, int(numbers), healthweight, staminaweight, healingweight, biomes)
+                graph = updateGraph(window, foods, int(numbers), healthweight, staminaweight, healingweight, biomes, minstamina, minhealth)
                 fig_canvas_agg = drawFigure(window['_CANVAS_'].TKCanvas, graph)
             case "Reset":
                 window['_CBMEADOWS_'].update(True)
@@ -235,6 +248,8 @@ def main():
                 window['_CBMOUNTAIN_'].update(True)
                 window['_CBPLAIN_'].update(True)
                 window['_CBOCEAN_'].update(True)
+                window['_MIN_STAMINA_'].update('0')
+                window['_MIN_HEALTH_'].update('0')
                 healthweight = 1
                 staminaweight = 1
                 healingweight = 0.1
@@ -257,6 +272,7 @@ def main():
                     healingweight = 0.5
                 else:
                     healingweight = 1
+
 
     window.close()
 
