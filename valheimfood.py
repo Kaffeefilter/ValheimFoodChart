@@ -9,7 +9,7 @@ import matplotlib
 matplotlib.use('TkAgg')
 
 
-def sortFoodKey(food, healthweight = 100, staminaweight = 100, healingweight = 1):
+def sortFoodKey(food, healthweight = 1, staminaweight = 1, healingweight = 0.1):
     #baseline wolf jerky: hp = 33, stamina = 33, hpptick = 3 => hp == stamina == hpptick * 11
     health_weighted = (food[0]['health'] + food[1]['health'] + food[2]['health']) * healthweight
     stamina_weighted = (food[0]['stamina'] + food[1]['stamina'] + food[2]['stamina']) * staminaweight 
@@ -116,7 +116,7 @@ def createCell(key, i, size):
     #return sg.Text(text=f"{i if key == 'NUM' else f'_TABLE_{key}_{i}_'}", key=f"_TABLE_{key}_{i}_")
 
 
-def updateGraph(window, foods, n = 5, healthweight = 100, staminaweight = 100, healingweight = 1, biomes = None, minstamina = 0, minhealth = 0):
+def updateGraph(window, foods, n = 5, healthweight = 1, staminaweight = 1, healingweight = 0.1, biomes = None, minstamina = 0, minhealth = 0):
     graph, combinedFood, n = generateGraph(foods, n, healthweight, staminaweight, healingweight, biomes, minstamina, minhealth)
     if n == 0:
         for i in range(1, 21):
@@ -210,7 +210,7 @@ def main():
             [cb_meadows, cb_blackforest, cb_swamp, cb_mountain, cb_plains, cb_ocean],
             [sg.Column(layout_preference), sg.Column(layout_element_numbers)],
             [text_min_stamina, spin_min_stamina, text_min_health, spin_min_health],
-            [sg.Button('Update'), sg.Button('Reset'), sg.Button('Size')]
+            [sg.Button('Update'), sg.Button('Reset')]
         ]), sg.Column(table, vertical_alignment='top')]
     ]
 
@@ -235,8 +235,8 @@ def main():
                 #break      #would work but coud be mistaken for switch case break
             case "Update":
                 biomes = [key for key, value in values.items() if key in ('_CBMEADOWS_', '_CBBLACKFOREST_', '_CBSWAMP_', '_CBMOUNTAIN_', '_CBPLAIN_', '_CBOCEAN_') if value]
-                minstamina = int(values['_MIN_STAMINA_'])
-                minhealth = int(values['_MIN_HEALTH_'])
+                minstamina = int(values['_MIN_STAMINA_']) if str(values['_MIN_STAMINA_']).isnumeric() else 0
+                minhealth = int(values['_MIN_HEALTH_']) if str(values['_MIN_HEALTH_']).isnumeric() else 0
                 delete_figure_agg(fig_canvas_agg)
                 graph = updateGraph(window, foods, int(numbers), healthweight, staminaweight, healingweight, biomes, minstamina, minhealth)
                 fig_canvas_agg = drawFigure(window['_CANVAS_'].TKCanvas, graph)
@@ -284,8 +284,6 @@ def main():
                     healingweight = 0.5
                 else:
                     healingweight = 1
-            case 'Size':
-                print(window['_TABLE_NAME_14_'].get_size())
 
 
     window.close()
